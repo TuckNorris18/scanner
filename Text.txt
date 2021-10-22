@@ -1,1 +1,7 @@
-This is a test.
+read
+/* foo
+read
+bar */
+*
+write :=
+five 5
