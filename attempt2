@@ -39,7 +39,7 @@ bool isID(string str)
 int main()
 {
 
-    // Replace 'Plop' with your file name.
+    // Replace 'Text' with your file name.
     ifstream file("Text.txt");
     string line;
     string temp;
@@ -81,13 +81,12 @@ int main()
         
     }
     bool secondaryFlag = false;
+    bool flagFound = false;
     cout << "Tokens (";
 
     //loop through tokens
     for (int i = 0; i < tokens.size(); i++)
     {
-        //cout << tokens.size() << endl;
-        bool stringTest = false;
         
         //loop through checks
         for (int j = 0; j < checks.size(); j++)
@@ -104,52 +103,68 @@ int main()
             }
             else if ((tokens[i] == checks[j]) && commentFlag == 0)
             {
+                //check for read token
                 if (tokens[i] == "read")
                 {
                     cout << "read,";
+                    flagFound = true;
                 }
+                //check for write token
                 else if (tokens[i] == "write")
                 {
                     cout << "write,";
+                    flagFound = true;
+
                 }
+                //check assign token
                 else if (tokens[i] == ":=")
                 {
                     cout << "assign,";
+                    flagFound = true;
+
                 }
+                //check left paren
                 else if (tokens[i] == "(")
                 {
                     cout << "Left Paren,";
+                    flagFound = true;
+
                 }
+                //check right paren
                 else if (tokens[i] == ")")
                 {
                     cout << "Right Paren,";
+                    flagFound = true;
+
                 }
+                //check +
                 else if (tokens[i] == "+")
                 {
                     cout << "Addition,";
+                    flagFound = true;
+
                 }
+                //check -
                 else if (tokens[i] == "-")
                 {
                     cout << "Subtraction,";
-                    
+                    flagFound = true;
+
                 }
+                // check *
                 else if (tokens[i] == "*")
                 {
                     cout << "Multiplication,";
-                    
-                }
-                else if (isID(tokens[i]))
-                {
-                    cout << "ID,";
-                    
+                    flagFound = true;
+
+
                 }
                 
-               
-
                 cout << " ";
             }
-
+            flagFound = 0;
         }
+        
         
     }
    
