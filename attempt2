@@ -43,7 +43,6 @@ bool isID(string str)
     }
     return flag;
 }
-string filePath;
 void getFilePath(string& path)
 {
     cout << "What is the path for your file: ";
@@ -73,8 +72,11 @@ bool badToken(string token)
 }
 
 
+string filePath;
+
 int main()
 {
+    //get file path to text document
     getFilePath(filePath);
     ifstream file(filePath);
     string line;
@@ -200,16 +202,17 @@ int main()
             }
             flagFound = 0;
 
-            //check for bad token
-            if (badToken(tokens[i]))
-            {
-                string goo;
-                cout << "error invalid token: "<< tokens[i] << endl;
-                cin >> goo;
-                exit(0);
-            }
+            
         }
-        
+        //check for bad tokens
+        //If found throw error
+        if (badToken(tokens[i]))
+        {
+            string goo;
+            cout << "error invalid token: " << tokens[i] << endl;
+            cin >> goo;
+            exit(0);
+        }
         
     }
     cout << ")";
