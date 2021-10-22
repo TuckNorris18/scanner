@@ -7,6 +7,14 @@
 
 using namespace std;
 
+bool isNum(char c)
+{
+    if ((int)c >= 48 && (int)c <= 57)
+    {
+        return true;
+    }
+    return false;
+}
 bool isString(char c)
 {
     int temp = (int)c;
@@ -42,6 +50,28 @@ void getFilePath(string& path)
 
     cin >> path;
 }
+bool badToken(string token)
+{
+    bool str=false;
+    bool num=false;
+    for (int i = 0; i < token.size(); i++)
+    {
+        if (isString(token[i]))
+        {
+            str = true;
+        }
+        if (isNum(token[i]))
+        {
+            num = true;
+        }
+        if (num && str)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 int main()
 {
@@ -98,14 +128,13 @@ int main()
         //loop through checks
         for (int j = 0; j < checks.size(); j++)
         {
+            //check "tokens" for tokens in table
             if (tokens[i] == "/* ")
             {
-                //cout << "Comment started" << endl;
                 commentFlag = 1;
             }
             else if (tokens[i] == "*/")
             {
-                //cout << "Comment ended" << endl;
                 commentFlag = 0;
             }
             else if ((tokens[i] == checks[j]) && commentFlag == 0)
@@ -170,9 +199,19 @@ int main()
                 cout << " ";
             }
             flagFound = 0;
+
+            //check for bad token
+            if (badToken(tokens[i]))
+            {
+                string goo;
+                cout << "error invalid token: "<< tokens[i] << endl;
+                cin >> goo;
+                exit(0);
+            }
         }
         
         
     }
     cout << ")";
+    cin >> filePath;
 }
