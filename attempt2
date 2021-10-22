@@ -1,0 +1,156 @@
+#include <vector>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+using namespace std;
+
+bool isString(char c)
+{
+    int temp = (int)c;
+    if (temp >= 65 && temp <= 90)
+    {
+        return true;
+    }
+    if (temp >= 97 && temp <= 122)
+    {
+        return true;
+    }
+
+    return false;
+}
+bool isID(string str)
+{
+    bool flag = true;
+    for (int i = 0; i < str.length(); i++)
+    {
+
+        if (!isString(str[i]))
+        {
+
+            flag = false;
+        }
+    }
+    return flag;
+}
+
+int main()
+{
+
+    // Replace 'Plop' with your file name.
+    ifstream file("Text.txt");
+    string line;
+    string temp;
+    vector<string> tokens;
+
+    bool commentFlag = false;
+    bool flag = false;
+
+    vector<string> checks;
+    checks.push_back("read");
+    checks.push_back("write");
+    checks.push_back("/* ");
+    checks.push_back("*/");
+    checks.push_back(":=");
+    checks.push_back("(");
+    checks.push_back(")");
+    checks.push_back("+");
+    checks.push_back("-");
+    checks.push_back("*");
+
+    // Read one line at a time into the variable line:
+    while (getline(file, line))
+    {
+        //cout << "Line is: " << line << endl;
+        for (int i = 0; i < line.size(); i++)
+        {
+            temp.append(string (1,line[i]));
+            //cout << "Appending: " << line[i] << endl;
+            if (line[i] == ' ' || (i == line.size()-1))
+            {
+                //cout << "space" << endl;
+                tokens.push_back(temp);
+                temp = "";
+            }
+            
+            
+        }
+        temp = "";
+        
+    }
+    bool secondaryFlag = false;
+    cout << "Tokens (";
+
+    //loop through tokens
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        //cout << tokens.size() << endl;
+        bool stringTest = false;
+        
+        //loop through checks
+        for (int j = 0; j < checks.size(); j++)
+        {
+            if (tokens[i] == "/* ")
+            {
+                //cout << "Comment started" << endl;
+                commentFlag = 1;
+            }
+            else if (tokens[i] == "*/")
+            {
+                //cout << "Comment ended" << endl;
+                commentFlag = 0;
+            }
+            else if ((tokens[i] == checks[j]) && commentFlag == 0)
+            {
+                if (tokens[i] == "read")
+                {
+                    cout << "read,";
+                }
+                else if (tokens[i] == "write")
+                {
+                    cout << "write,";
+                }
+                else if (tokens[i] == ":=")
+                {
+                    cout << "assign,";
+                }
+                else if (tokens[i] == "(")
+                {
+                    cout << "Left Paren,";
+                }
+                else if (tokens[i] == ")")
+                {
+                    cout << "Right Paren,";
+                }
+                else if (tokens[i] == "+")
+                {
+                    cout << "Addition,";
+                }
+                else if (tokens[i] == "-")
+                {
+                    cout << "Subtraction,";
+                    
+                }
+                else if (tokens[i] == "*")
+                {
+                    cout << "Multiplication,";
+                    
+                }
+                else if (isID(tokens[i]))
+                {
+                    cout << "ID,";
+                    
+                }
+                
+               
+
+                cout << " ";
+            }
+
+        }
+        
+    }
+   
+}
