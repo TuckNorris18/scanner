@@ -35,12 +35,18 @@ bool isID(string str)
     }
     return flag;
 }
+string filePath;
+void getFilePath(string& path)
+{
+    cout << "What is the path for your file: ";
+
+    cin >> path;
+}
 
 int main()
 {
-
-    // Replace 'Text' with your file name.
-    ifstream file("Text.txt");
+    getFilePath(filePath);
+    ifstream file(filePath);
     string line;
     string temp;
     vector<string> tokens;
@@ -48,6 +54,7 @@ int main()
     bool commentFlag = false;
     bool flag = false;
 
+    //This is essentially our transition table
     vector<string> checks;
     checks.push_back("read");
     checks.push_back("write");
@@ -110,7 +117,7 @@ int main()
                     flagFound = true;
                 }
                 //check for write token
-                else if (tokens[i] == "write")
+                else if (tokens[i] == "write ")
                 {
                     cout << "write,";
                     flagFound = true;
@@ -167,5 +174,5 @@ int main()
         
         
     }
-   
+    cout << ")";
 }
